@@ -1,5 +1,5 @@
   <template>
-  <div id="container">
+  <div id="container"> 
     <div class="shadow rounded-corners padding-20 margin-15 white-bg overflow-hidden">
       <h1>To-do List</h1>
       <p>This is a simple To-do List application to help you organise your day. Enjoy! </p>
