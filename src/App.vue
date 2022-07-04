@@ -154,7 +154,9 @@ ul {
   width: 100%;
   margin: auto;
 }
-
+input {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 input[type="submit"] {
   width: 75px;
   float: right;
