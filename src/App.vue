@@ -1,16 +1,27 @@
   <template>
-  <div id="container"> 
+  <div id="container">
     <div class="shadow rounded-corners padding-20 margin-15 white-bg overflow-hidden">
       <h1>To-do List</h1>
       <p>This is a simple To-do List application to help you organise your day. Enjoy! </p>
       <form @submit.prevent="addItem">
-        <input class="rounded-corners height-30" type="text" v-model="newTodo">
-        <input class="white-bg button height-30" type="submit" value="Submit">
+        <div class="form-div">
+          <label for="todo" class="block" >To-Do Item: </label>
+          <input class="rounded-corners height-30 block" type="text" id="todo" placeholder="To-Do Item" v-model="newTodo">
+        </div>
+        <div class="form-div">
+          <label for="date" class="block">Date: </label>
+          <input class="height-30 rounded-corners block" type="date" id="date" v-model="newDate"><br>
+        </div>
+        <div class="form-div">
+          <input class="white-bg button height-30 block" type="submit" value="Submit">
+        </div>
       </form>
     </div>
+
     <ul v-if="hasTodos">
       <li class="shadow rounded-corners padding-20 block margin-15 white-bg" v-for="todo in todos">
-        <input type="checkbox" v-model="todo.done" :id="todo.id"><label :for="todo.id">{{ todo.text }}</label>
+        <input type="checkbox" v-model="todo.done" :id="todo.id"><label :for="todo.id">{{ todo.text }} - {{ todo.date
+        }}</label>
         <button class="button delete-button padding-5 white-bg" @click="deleteItem(todo)" :key="todo.id">X</button>
       </li>
     </ul>
@@ -31,6 +42,8 @@ export default {
   data() {
     return {
       newTodo: "",
+      newDate: "No Date",
+      dateToUse: "",
       todos: [],
       hasTodos: true,
       uName: "",
@@ -40,14 +53,21 @@ export default {
   },
   methods: {
     addItem() {
-      this.id++
-      if (this.todos[0] === this.sampleTodo) {
-        this.todos[0] = { id: this.id, text: this.newTodo, done: false }
+      if (this.newDate === "") {
+        this.dateToUse = "No Date"
       }
       else {
-        this.todos.push({ id: this.id, text: this.newTodo, done: false })
+        this.dateToUse = this.newDate
+      }
+      this.id++
+      if (this.todos[0] === this.sampleTodo) {
+        this.todos[0] = { id: this.id, text: this.newTodo, date: this.dateToUse, done: false }
+      }
+      else {
+        this.todos.push({ id: this.id, text: this.newTodo, date: this.dateToUse, done: false })
       }
       this.newTodo = ""
+      this.newDate = "No Date"
       this.hasTodos = true
     },
     deleteItem(todo) {
@@ -118,8 +138,16 @@ body {
   margin: 15px;
 }
 
-.button {
+.date {
   float: right;
+}
+
+.form-div {
+  display: block;
+  margin-top: 15px;
+}
+
+.button {
   border-radius: 5px;
   height: 30px;
   border-color: lightgrey;
@@ -129,7 +157,9 @@ body {
 
 .delete-button {
   width: 40px;
+  float: right;
 }
+
 
 .button:hover {
   background-color: lightgray;
@@ -157,14 +187,10 @@ ul {
 input {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-input[type="submit"] {
-  width: 75px;
-  float: right;
-}
 
-input[type="text"] {
-  width: calc(100% - 80px);
-  float: left;
+input[type="submit"], input[type="text"], input[type="date"] {
+  width: 100%;
+  float: right;
   border-style: solid;
   border: 2px solid lightgrey;
 }
